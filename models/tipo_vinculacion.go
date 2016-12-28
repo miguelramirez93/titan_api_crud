@@ -9,49 +9,44 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type Nomina struct {
-	Id          int              `orm:"column(id);pk"`
-	Vinculacion *TipoVinculacion `orm:"column(vinculacion);rel(fk)"`
-	Nombre      string           `orm:"column(nombre)"`
-	Descripcion string           `orm:"column(descripcion)"`
-	TipoNomina  string           `orm:"column(tipo_nomina)"`
-	Estado      string           `orm:"column(estado)"`
-	Periodo     string           `orm:"column(periodo);null"`
+type TipoVinculacion struct {
+	Id     int    `orm:"column(id);pk"`
+	Nombre string `orm:"column(nombre);null"`
 }
 
-func (t *Nomina) TableName() string {
-	return "nomina"
+func (t *TipoVinculacion) TableName() string {
+	return "tipo_vinculacion"
 }
 
 func init() {
-	orm.RegisterModel(new(Nomina))
+	orm.RegisterModel(new(TipoVinculacion))
 }
 
-// AddNomina insert a new Nomina into database and returns
+// AddTipoVinculacion insert a new TipoVinculacion into database and returns
 // last inserted Id on success.
-func AddNomina(m *Nomina) (id int64, err error) {
+func AddTipoVinculacion(m *TipoVinculacion) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetNominaById retrieves Nomina by Id. Returns error if
+// GetTipoVinculacionById retrieves TipoVinculacion by Id. Returns error if
 // Id doesn't exist
-func GetNominaById(id int) (v *Nomina, err error) {
+func GetTipoVinculacionById(id int) (v *TipoVinculacion, err error) {
 	o := orm.NewOrm()
-	v = &Nomina{Id: id}
+	v = &TipoVinculacion{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllNomina retrieves all Nomina matches certain condition. Returns empty list if
+// GetAllTipoVinculacion retrieves all TipoVinculacion matches certain condition. Returns empty list if
 // no records exist
-func GetAllNomina(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllTipoVinculacion(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Nomina))
+	qs := o.QueryTable(new(TipoVinculacion))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -101,8 +96,8 @@ func GetAllNomina(query map[string]string, fields []string, sortby []string, ord
 		}
 	}
 
-	var l []Nomina
-	qs = qs.OrderBy(sortFields...).RelatedSel(5)
+	var l []TipoVinculacion
+	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {
@@ -124,11 +119,11 @@ func GetAllNomina(query map[string]string, fields []string, sortby []string, ord
 	return nil, err
 }
 
-// UpdateNomina updates Nomina by Id and returns error if
+// UpdateTipoVinculacion updates TipoVinculacion by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateNominaById(m *Nomina) (err error) {
+func UpdateTipoVinculacionById(m *TipoVinculacion) (err error) {
 	o := orm.NewOrm()
-	v := Nomina{Id: m.Id}
+	v := TipoVinculacion{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -139,15 +134,15 @@ func UpdateNominaById(m *Nomina) (err error) {
 	return
 }
 
-// DeleteNomina deletes Nomina by Id and returns error if
+// DeleteTipoVinculacion deletes TipoVinculacion by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteNomina(id int) (err error) {
+func DeleteTipoVinculacion(id int) (err error) {
 	o := orm.NewOrm()
-	v := Nomina{Id: id}
+	v := TipoVinculacion{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Nomina{Id: id}); err == nil {
+		if num, err = o.Delete(&TipoVinculacion{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
