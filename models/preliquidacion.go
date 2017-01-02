@@ -5,49 +5,55 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type Concepto struct {
-	Id             int           `orm:"column(id);pk"`
-	NombreConcepto string        `orm:"column(nombre_concepto)"`
-	Naturaleza    string    `orm:"column(naturaleza);null"`
+type Preliquidacion struct {
+	Nombre      string    `orm:"column(nombre)"`
+	Nomina      *Nomina   `orm:"column(nomina);rel(fk)"`
+	Estado      string    `orm:"column(estado)"`
+	Fecha       time.Time `orm:"column(fecha);type(date)"`
+	Descripcion string    `orm:"column(descripcion);null"`
+	FechaInicio time.Time `orm:"column(fecha_inicio);type(date)"`
+	FechaFin    time.Time `orm:"column(fecha_fin);type(date)"`
+	Id          int       `orm:"column(id);pk"`
 }
 
-func (t *Concepto) TableName() string {
-	return "concepto"
+func (t *Preliquidacion) TableName() string {
+	return "preliquidacion"
 }
 
 func init() {
-	orm.RegisterModel(new(Concepto))
+	orm.RegisterModel(new(Preliquidacion))
 }
 
-// AddConcepto insert a new Concepto into database and returns
+// AddPreliquidacion insert a new Preliquidacion into database and returns
 // last inserted Id on success.
-func AddConcepto(m *Concepto) (id int64, err error) {
+func AddPreliquidacion(m *Preliquidacion) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetConceptoById retrieves Concepto by Id. Returns error if
+// GetPreliquidacionById retrieves Preliquidacion by Id. Returns error if
 // Id doesn't exist
-func GetConceptoById(id int) (v *Concepto, err error) {
+func GetPreliquidacionById(id int) (v *Preliquidacion, err error) {
 	o := orm.NewOrm()
-	v = &Concepto{Id: id}
+	v = &Preliquidacion{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllConcepto retrieves all Concepto matches certain condition. Returns empty list if
+// GetAllPreliquidacion retrieves all Preliquidacion matches certain condition. Returns empty list if
 // no records exist
-func GetAllConcepto(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllPreliquidacion(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Concepto))
+	qs := o.QueryTable(new(Preliquidacion))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -97,7 +103,7 @@ func GetAllConcepto(query map[string]string, fields []string, sortby []string, o
 		}
 	}
 
-	var l []Concepto
+	var l []Preliquidacion
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -120,11 +126,11 @@ func GetAllConcepto(query map[string]string, fields []string, sortby []string, o
 	return nil, err
 }
 
-// UpdateConcepto updates Concepto by Id and returns error if
+// UpdatePreliquidacion updates Preliquidacion by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateConceptoById(m *Concepto) (err error) {
+func UpdatePreliquidacionById(m *Preliquidacion) (err error) {
 	o := orm.NewOrm()
-	v := Concepto{Id: m.Id}
+	v := Preliquidacion{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -135,15 +141,15 @@ func UpdateConceptoById(m *Concepto) (err error) {
 	return
 }
 
-// DeleteConcepto deletes Concepto by Id and returns error if
+// DeletePreliquidacion deletes Preliquidacion by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteConcepto(id int) (err error) {
+func DeletePreliquidacion(id int) (err error) {
 	o := orm.NewOrm()
-	v := Concepto{Id: id}
+	v := Preliquidacion{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Concepto{Id: id}); err == nil {
+		if num, err = o.Delete(&Preliquidacion{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

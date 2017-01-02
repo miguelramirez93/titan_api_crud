@@ -10,7 +10,7 @@ import (
 )
 
 type DetallePreliquidacion struct {
-	Id             int       `orm:"column(id);pk"`
+	Id             int       `orm:"column(id);pk;auto"`
 	ValorCalculado int64     `orm:"column(valor_calculado)"`
 	Preliquidacion int       `orm:"column(preliquidacion)"`
 	Persona        int       `orm:"column(persona)"`
@@ -24,7 +24,6 @@ func (t *DetallePreliquidacion) TableName() string {
 func init() {
 	orm.RegisterModel(new(DetallePreliquidacion))
 }
-
 // AddDetallePreliquidacion insert a new DetallePreliquidacion into database and returns
 // last inserted Id on success.
 func AddDetallePreliquidacion(m *DetallePreliquidacion) (id int64, err error) {
@@ -141,13 +140,10 @@ func UpdateDetallePreliquidacionById(m *DetallePreliquidacion) (err error) {
 // the record to be deleted doesn't exist
 func DeleteDetallePreliquidacion(id int) (err error) {
 	o := orm.NewOrm()
-	v := DetallePreliquidacion{Id: id}
-	// ascertain id exists in the database
-	if err = o.Read(&v); err == nil {
-		var num int64
-		if num, err = o.Delete(&DetallePreliquidacion{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
-		}
+	res, err := o.Raw("DELETE FROM detalle_preliquidacion WHERE preliquidacion = ?", id).Exec()
+	if err == nil {
+    num, _ := res.RowsAffected()
+    fmt.Println("row affected nums: ", num)
 	}
 	return
 }

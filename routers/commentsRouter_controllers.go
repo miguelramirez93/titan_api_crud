@@ -601,6 +601,41 @@ func init() {
 			AllowHTTPMethods: []string{"delete"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"],
+		beego.ControllerComments{
+			Method: "Post",
+			Router: `/`,
+			AllowHTTPMethods: []string{"post"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"],
+		beego.ControllerComments{
+			Method: "GetOne",
+			Router: `/:id`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"],
+		beego.ControllerComments{
+			Method: "GetAll",
+			Router: `/`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"],
+		beego.ControllerComments{
+			Method: "Put",
+			Router: `/:id`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:PreliquidacionController"],
+		beego.ControllerComments{
+			Method: "Delete",
+			Router: `/:id`,
+			AllowHTTPMethods: []string{"delete"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["titan_api_crud/controllers:RelacionParametroController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:RelacionParametroController"],
 		beego.ControllerComments{
 			Method: "Post",
@@ -671,70 +706,70 @@ func init() {
 			AllowHTTPMethods: []string{"delete"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
 			AllowHTTPMethods: []string{"post"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
 		beego.ControllerComments{
 			Method: "GetOne",
 			Router: `/:id`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
 		beego.ControllerComments{
 			Method: "GetAll",
 			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
 		beego.ControllerComments{
 			Method: "Put",
 			Router: `/:id`,
 			AllowHTTPMethods: []string{"put"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoConceptoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
 		beego.ControllerComments{
 			Method: "Delete",
 			Router: `/:id`,
 			AllowHTTPMethods: []string{"delete"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"],
 		beego.ControllerComments{
 			Method: "Post",
 			Router: `/`,
 			AllowHTTPMethods: []string{"post"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"],
 		beego.ControllerComments{
 			Method: "GetOne",
 			Router: `/:id`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"],
 		beego.ControllerComments{
 			Method: "GetAll",
 			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"],
 		beego.ControllerComments{
 			Method: "Put",
 			Router: `/:id`,
 			AllowHTTPMethods: []string{"put"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoContratoController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:TipoNominaController"],
 		beego.ControllerComments{
 			Method: "Delete",
 			Router: `/:id`,

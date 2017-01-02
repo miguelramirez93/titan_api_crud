@@ -11,7 +11,7 @@ import (
 )
 
 type ConceptoPorPersona struct {
-	ValorNovedad  int64     `orm:"column(valor_novedad)"`
+	ValorNovedad  float64     `orm:"column(valor_novedad)"`
 	EstadoNovedad int64     `orm:"column(estado_novedad)"`
 	FechaDesde    time.Time `orm:"column(fecha_desde);type(date)"`
 	FechaHasta    time.Time `orm:"column(fecha_hasta);type(date)"`
@@ -20,6 +20,7 @@ type ConceptoPorPersona struct {
 	Concepto      *Concepto `orm:"column(concepto);rel(fk)"`
 	Nomina        int       `orm:"column(nomina)"`
 	Id            int       `orm:"column(id);pk"`
+	Tipo          string    `orm:"column(tipo);null"`
 }
 
 func (t *ConceptoPorPersona) TableName() string {
@@ -105,7 +106,7 @@ func GetAllConceptoPorPersona(query map[string]string, fields []string, sortby [
 	}
 
 	var l []ConceptoPorPersona
-	qs = qs.OrderBy(sortFields...)
+	qs = qs.OrderBy(sortFields...).RelatedSel(5)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {

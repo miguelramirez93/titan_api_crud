@@ -16,6 +16,34 @@ import (
 func init() {
 	ns := beego.NewNamespace("/v1",
 
+		beego.NSNamespace("/preliquidacion",
+			beego.NSInclude(
+				&controllers.PreliquidacionController{},
+			),
+		),
+		beego.NSNamespace("/concepto",
+		  beego.NSInclude(
+		    &controllers.ConceptoController{},
+		  ),
+		),
+
+		beego.NSNamespace("/nomina",
+		  beego.NSInclude(
+		    &controllers.NominaController{},
+		  ),
+		),
+
+		beego.NSNamespace("/concepto_por_persona",
+		  beego.NSInclude(
+		    &controllers.ConceptoPorPersonaController{},
+		  ),
+		),
+
+		beego.NSNamespace("/tipo_nomina",
+		  beego.NSInclude(
+		    &controllers.TipoNominaController{},
+		  ),
+		),
 		beego.NSNamespace("/acta_inicio",
 		  beego.NSInclude(
 		    &controllers.ActaInicioController{},
@@ -107,51 +135,44 @@ func init() {
 		),
 
 		beego.NSNamespace("/concepto",
-			beego.NSInclude(
-				&controllers.ConceptoController{},
-			),
+		  beego.NSInclude(
+		    &controllers.ConceptoController{},
+		  ),
 		),
 
 		beego.NSNamespace("/nomina",
-			beego.NSInclude(
-				&controllers.NominaController{},
-			),
+		  beego.NSInclude(
+		    &controllers.NominaController{},
+		  ),
 		),
 
 		beego.NSNamespace("/concepto_por_persona",
-			beego.NSInclude(
-				&controllers.ConceptoPorPersonaController{},
-			),
+		  beego.NSInclude(
+		    &controllers.ConceptoPorPersonaController{},
+		  ),
 		),
 
 		beego.NSNamespace("/detalle_preliquidacion",
-			beego.NSInclude(
-				&controllers.DetallePreliquidacionController{},
-			),
+		  beego.NSInclude(
+		    &controllers.DetallePreliquidacionController{},
+		  ),
 		),
 
 		beego.NSNamespace("/liquidacion",
-			beego.NSInclude(
-				&controllers.LiquidacionController{},
-			),
+		  beego.NSInclude(
+		    &controllers.LiquidacionController{},
+		  ),
 		),
 
 		beego.NSNamespace("/detalle_liquidacion",
-			beego.NSInclude(
-				&controllers.DetalleLiquidacionController{},
-			),
+		  beego.NSInclude(
+		    &controllers.DetalleLiquidacionController{},
+		  ),
 		),
-
-		beego.NSNamespace("/tipo_concepto",
-			beego.NSInclude(
-				&controllers.TipoConceptoController{},
-			),
-		),
-
 		beego.NSNamespace("/concepto",
-			beego.NSInclude(
-				&controllers.ConceptoController{},
-			),
+		  beego.NSInclude(
+		    &controllers.ConceptoController{},
+		  ),
 		),
 	)
 	beego.AddNamespace(ns)

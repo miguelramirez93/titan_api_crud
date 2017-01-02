@@ -9,44 +9,44 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type TipoConcepto struct {
+type TipoNomina struct {
 	Id     int    `orm:"column(id);pk"`
-	Nombre string `orm:"column(nombre)"`
+	Nombre string `orm:"column(Nombre);null"`
 }
 
-func (t *TipoConcepto) TableName() string {
-	return "tipo_concepto"
+func (t *TipoNomina) TableName() string {
+	return "tipo_nomina"
 }
 
 func init() {
-	orm.RegisterModel(new(TipoConcepto))
+	orm.RegisterModel(new(TipoNomina))
 }
 
-// AddTipoConcepto insert a new TipoConcepto into database and returns
+// AddTipoNomina insert a new TipoNomina into database and returns
 // last inserted Id on success.
-func AddTipoConcepto(m *TipoConcepto) (id int64, err error) {
+func AddTipoNomina(m *TipoNomina) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetTipoConceptoById retrieves TipoConcepto by Id. Returns error if
+// GetTipoNominaById retrieves TipoNomina by Id. Returns error if
 // Id doesn't exist
-func GetTipoConceptoById(id int) (v *TipoConcepto, err error) {
+func GetTipoNominaById(id int) (v *TipoNomina, err error) {
 	o := orm.NewOrm()
-	v = &TipoConcepto{Id: id}
+	v = &TipoNomina{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllTipoConcepto retrieves all TipoConcepto matches certain condition. Returns empty list if
+// GetAllTipoNomina retrieves all TipoNomina matches certain condition. Returns empty list if
 // no records exist
-func GetAllTipoConcepto(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllTipoNomina(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(TipoConcepto))
+	qs := o.QueryTable(new(TipoNomina))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -96,7 +96,7 @@ func GetAllTipoConcepto(query map[string]string, fields []string, sortby []strin
 		}
 	}
 
-	var l []TipoConcepto
+	var l []TipoNomina
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -119,11 +119,11 @@ func GetAllTipoConcepto(query map[string]string, fields []string, sortby []strin
 	return nil, err
 }
 
-// UpdateTipoConcepto updates TipoConcepto by Id and returns error if
+// UpdateTipoNomina updates TipoNomina by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateTipoConceptoById(m *TipoConcepto) (err error) {
+func UpdateTipoNominaById(m *TipoNomina) (err error) {
 	o := orm.NewOrm()
-	v := TipoConcepto{Id: m.Id}
+	v := TipoNomina{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -134,15 +134,15 @@ func UpdateTipoConceptoById(m *TipoConcepto) (err error) {
 	return
 }
 
-// DeleteTipoConcepto deletes TipoConcepto by Id and returns error if
+// DeleteTipoNomina deletes TipoNomina by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteTipoConcepto(id int) (err error) {
+func DeleteTipoNomina(id int) (err error) {
 	o := orm.NewOrm()
-	v := TipoConcepto{Id: id}
+	v := TipoNomina{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&TipoConcepto{Id: id}); err == nil {
+		if num, err = o.Delete(&TipoNomina{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

@@ -14,9 +14,9 @@ type Nomina struct {
 	Vinculacion *TipoVinculacion `orm:"column(vinculacion);rel(fk)"`
 	Nombre      string           `orm:"column(nombre)"`
 	Descripcion string           `orm:"column(descripcion)"`
-	TipoNomina  string           `orm:"column(tipo_nomina)"`
 	Estado      string           `orm:"column(estado)"`
 	Periodo     string           `orm:"column(periodo);null"`
+	TipoNomina  *TipoNomina      `orm:"column(tipo_nomina);rel(fk)"`
 }
 
 func (t *Nomina) TableName() string {
