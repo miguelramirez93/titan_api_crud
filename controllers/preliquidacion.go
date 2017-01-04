@@ -22,6 +22,7 @@ func (c *PreliquidacionController) URLMapping() {
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Put", c.Put)
 	c.Mapping("Delete", c.Delete)
+	c.Mapping("Resumen", c.Resumen)
 }
 
 // Post ...
@@ -164,6 +165,21 @@ func (c *PreliquidacionController) Delete() {
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeletePreliquidacion(id); err == nil {
 		c.Data["json"] = "OK"
+	} else {
+		c.Data["json"] = err.Error()
+	}
+	c.ServeJSON()
+}
+
+func (c *PreliquidacionController) Resumen() {
+	var v models.Preliquidacion
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
+		if res , err := models.ResumenPreliquidacion(&v); err == nil {
+			c.Ctx.Output.SetStatus(201)
+			c.Data["json"] = res
+		} else {
+			c.Data["json"] = err.Error()
+		}
 	} else {
 		c.Data["json"] = err.Error()
 	}
