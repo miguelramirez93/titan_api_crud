@@ -6,7 +6,7 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["github.com/miguelramirez93/titan_api_crud/controllers:PruebaFuncionarioProveedorController"] = append(beego.GlobalControllerRouter["github.com/miguelramirez93/titan_api_crud/controllers:PruebaFuncionarioProveedorController"],
+	beego.GlobalControllerRouter["titan_api_crud/controllers:PruebaFuncionarioProveedorController"] = append(beego.GlobalControllerRouter["github.com/miguelramirez93/titan_api_crud/controllers:PruebaFuncionarioProveedorController"],
 		beego.ControllerComments{
 			Method: "ConsultarIDProveedor",
 			Router: `/`,
