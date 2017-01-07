@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
-	"titan_api_crud/models"
+	"github.com/miguelramirez93/titan_api_crud/models"
 
 	"github.com/astaxie/beego"
 )

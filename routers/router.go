@@ -8,18 +8,14 @@
 package routers
 
 import (
-	"titan_api_crud/controllers"
+	"github.com/miguelramirez93/titan_api_crud/controllers"
 
 	"github.com/astaxie/beego"
 )
 
 func init() {
 	ns := beego.NewNamespace("/v1",
-		beego.NSNamespace("/informacion_contrato",
-			beego.NSInclude(
-				&controllers.InformacionContratoController{},
-			),
-		),
+
 		beego.NSNamespace("/tipo_vinculacion",
 			beego.NSInclude(
 				&controllers.TipoVinculacionController{},
@@ -181,6 +177,12 @@ func init() {
 		beego.NSNamespace("/concepto",
 		  beego.NSInclude(
 		    &controllers.ConceptoController{},
+		  ),
+		),
+
+		beego.NSNamespace("/FuncionarioProveedor",
+		  beego.NSInclude(
+		    &controllers.PruebaFuncionarioProveedorController{},
 		  ),
 		),
 	)

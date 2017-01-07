@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"titan_api_crud/models"
+	"github.com/miguelramirez93/titan_api_crud/models"
 	"encoding/json"
 
 	"github.com/astaxie/beego"
@@ -116,4 +116,3 @@ func (u *UserController) Logout() {
 	u.Data["json"] = "logout success"
 	u.ServeJSON()
 }
-
