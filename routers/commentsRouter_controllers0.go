@@ -5,6 +5,12 @@ import (
 )
 
 func init() {
+	beego.GlobalControllerRouter["titan_api_crud/controllers:InformacionContratoController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:InformacionContratoController"],
+			beego.ControllerComments{
+				Method: "Post",
+				Router: `/`,
+				AllowHTTPMethods: []string{"post"},
+				Params: nil})
 
 	beego.GlobalControllerRouter["titan_api_crud/controllers:ActaInicioController"] = append(beego.GlobalControllerRouter["titan_api_crud/controllers:ActaInicioController"],
 		beego.ControllerComments{
