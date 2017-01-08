@@ -31,3 +31,17 @@ func GetIdProveedorXFuncionario() (arregloIDs []Funcionario_x_Proveedor) {
 
   return temp;
 }
+func ListaContratos (v *Preliquidacion) ( datos []Funcionario_x_Proveedor , err error){
+	o := orm.NewOrm()
+  consulta := `select c.id_proveedor ,
+								      c.nom_proveedor ,
+								      b.contratista ,
+								      b.numero_contrato
+								      from argo.acta_inicio as a inner join argo.contrato_general as b on a.numero_contrato = b.numero_contrato
+														   inner join agora.informacion_proveedor as c on b.contratista = c.num_documento
+														   inner join argo.tipo_contrato on argo.tipo_contrato.id = b.tipo_contrato
+														   where (argo.tipo_contrato.tipo_contrato = ?)  and ((? between a.fecha_inicio and a.fecha_fin) or ( ? between a.fecha_inicio and a.fecha_fin) ); `
+
+	_,err = o.Raw(consulta, v.Nomina.TipoNomina.Nombre , v.FechaInicio, v.FechaFin).QueryRows(&datos)
+	return
+}

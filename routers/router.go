@@ -180,9 +180,9 @@ func init() {
 		  ),
 		),
 
-		beego.NSNamespace("/FuncionarioProveedor",
+		beego.NSNamespace("/funcionario_proveedor",
 		  beego.NSInclude(
-		    &controllers.PruebaFuncionarioProveedorController{},
+		    &controllers.FuncionarioProveedorController{},
 		  ),
 		),
 	)
