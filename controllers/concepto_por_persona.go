@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 		"titan_api_crud/models"
-
+		"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -22,6 +22,7 @@ func (c *ConceptoPorPersonaController) URLMapping() {
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Put", c.Put)
 	c.Mapping("Delete", c.Delete)
+	c.Mapping("NovedadesActivas", c.NovedadesActivas)
 }
 
 // Post ...
@@ -164,6 +165,24 @@ func (c *ConceptoPorPersonaController) Delete() {
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteConceptoPorPersona(id); err == nil {
 		c.Data["json"] = "OK"
+	} else {
+		c.Data["json"] = err.Error()
+	}
+	c.ServeJSON()
+}
+
+func (c *ConceptoPorPersonaController) NovedadesActivas() {
+	var v models.Preliquidacion
+	idStr := c.Ctx.Input.Param(":id")
+	id, _ := strconv.Atoi(idStr)
+	fmt.Println("id: ", id)
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
+		if listaNovedadesActivas, err := models.ConceptoPorPersonaActivo(id,&v); err == nil {
+			c.Ctx.Output.SetStatus(201)
+			c.Data["json"] = listaNovedadesActivas
+		} else {
+			c.Data["json"] = err.Error()
+		}
 	} else {
 		c.Data["json"] = err.Error()
 	}
