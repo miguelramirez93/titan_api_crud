@@ -26,7 +26,7 @@ func (c *FuncionarioProveedorController) URLMapping() {
 func (c *FuncionarioProveedorController) ConsultarIDProveedor() {
   var v models.Preliquidacion
   if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if (v.Nomina.TipoNomina.Nombre == "HC"){
+		if (v.Nomina.TipoNomina.Nombre == "HC" || v.Nomina.TipoNomina.Nombre == "HC-SALARIOS" ){
 			if listaContratos, err := models.ListaContratos(&v); err == nil {
 	      c.Ctx.Output.SetStatus(201)
 
