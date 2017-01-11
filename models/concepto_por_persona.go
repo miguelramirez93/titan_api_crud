@@ -19,7 +19,7 @@ type ConceptoPorPersona struct {
 	Persona       int       `orm:"column(persona)"`
 	Concepto      *Concepto `orm:"column(concepto);rel(fk)"`
 	Nomina        int       `orm:"column(nomina)"`
-	Id            int       `orm:"column(id);pk"`
+	Id            int       `orm:"auto;column(id);pk"`
 	Tipo          string    `orm:"column(tipo);null"`
 }
 
