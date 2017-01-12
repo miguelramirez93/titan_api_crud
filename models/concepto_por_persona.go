@@ -16,9 +16,9 @@ type ConceptoPorPersona struct {
 	FechaDesde    time.Time `orm:"column(fecha_desde);type(date)"`
 	FechaHasta    time.Time `orm:"column(fecha_hasta);type(date)"`
 	NumCuotas     int64     `orm:"column(num_cuotas)"`
-	Persona       int       `orm:"column(persona)"`
+	Persona       *InformacionProveedor       `orm:"column(persona);rel(fk)"`
 	Concepto      *Concepto `orm:"column(concepto);rel(fk)"`
-	Nomina        int       `orm:"column(nomina)"`
+	Nomina        *Nomina       `orm:"column(nomina);rel(fk)"`
 	Id            int       `orm:"auto;column(id);pk"`
 	Tipo          string    `orm:"column(tipo);null"`
 }
