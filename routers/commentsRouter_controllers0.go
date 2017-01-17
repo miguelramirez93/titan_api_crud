@@ -24,4 +24,10 @@ func init() {
 					Router: `novedades_activas/:id`,
 					AllowHTTPMethods: []string{"post"},
 					Params: nil})
+				beego.GlobalControllerRouter["titan_api_crud/controllers:FuncionarioCargoController"] = append(beego.GlobalControllerRouter["github.com/miguelramirez93/titan_api_crud/controllers:FuncionarioCargoController"],
+			beego.ControllerComments{
+				Method: "ConsultarAsignacionBasica",
+				Router: `/`,
+				AllowHTTPMethods: []string{"post"},
+				Params: nil})
 }
