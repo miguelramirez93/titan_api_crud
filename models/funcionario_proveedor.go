@@ -31,6 +31,18 @@ func GetIdProveedorXFuncionario() (arregloIDs []Funcionario_x_Proveedor) {
 
   return temp;
 }
+
+func GetIdProveedorXDocente() (arregloIDs []Funcionario_x_Proveedor) {
+	o := orm.NewOrm()
+
+	var temp []Funcionario_x_Proveedor
+	_, err := o.Raw("SELECT informacionproveedor.id_proveedor, contratos.contratista,contratos.numero_contrato,informacionproveedor.nom_proveedor FROM agora.informacion_proveedor AS informacionproveedor, argo.contrato_general AS contratos where contratos.objeto_contrato = 'Docente de planta' AND contratos.contratista = informacionproveedor.num_documento").QueryRows(&temp)
+	if err == nil {
+		fmt.Println("Consulta exitosa")
+	}
+	return temp
+}
+
 func ListaContratos (v *Preliquidacion) ( datos []Funcionario_x_Proveedor , err error){
 	o := orm.NewOrm()
   consulta := `select c.id_proveedor ,

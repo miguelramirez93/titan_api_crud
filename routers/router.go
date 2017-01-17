@@ -183,6 +183,11 @@ func init() {
 		    &controllers.ConceptoController{},
 		  ),
 		),
+		beego.NSNamespace("/docente_cargo",
+	beego.NSInclude(
+		&controllers.DocenteCargoController{},
+	),
+),
 
 		beego.NSNamespace("/funcionario_proveedor",
 		  beego.NSInclude(

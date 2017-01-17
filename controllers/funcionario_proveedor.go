@@ -41,6 +41,12 @@ func (c *FuncionarioProveedorController) ConsultarIDProveedor() {
 
 	      c.Data["json"] = listaContratos
 
+		}else if (v.Nomina.TipoNomina.Nombre == "DP"){
+			listaContratos := models.GetIdProveedorXDocente()
+	      c.Ctx.Output.SetStatus(201)
+
+	      c.Data["json"] = listaContratos
+
 		}
 
   } else {
