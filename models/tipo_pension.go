@@ -5,55 +5,48 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
-type Liquidacion struct {
-	Id                int       `orm:"column(id);pk"`
-	NombreLiquidacion string    `orm:"column(nombre_liquidacion)"`
-	IdUsuario         int64     `orm:"column(id_usuario)"`
-	Nomina            *Nomina   `orm:"column(nomina);rel(fk)"`
-	EstadoLiquidacion string    `orm:"column(estado_liquidacion)"`
-	FechaLiquidacion  time.Time `orm:"column(fecha_liquidacion);type(date)"`
-	FechaInicio       time.Time `orm:"column(fecha_inicio);type(date)"`
-	FechaFin          time.Time `orm:"column(fecha_fin);type(date)"`
+type TipoPension struct {
+	Id            int    `orm:"column(id);pk"`
+	NombrePension string `orm:"column(nombre_pension)"`
 }
 
-func (t *Liquidacion) TableName() string {
-	return "liquidacion"
+func (t *TipoPension) TableName() string {
+	return "tipo_pension"
 }
 
 func init() {
-	orm.RegisterModel(new(Liquidacion))
+	orm.RegisterModel(new(TipoPension))
 }
 
-// AddLiquidacion insert a new Liquidacion into database and returns
+// AddTipoPension insert a new TipoPension into database and returns
 // last inserted Id on success.
-func AddLiquidacion(m *Liquidacion) (id int64, err error) {
+func AddTipoPension(m *TipoPension) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetLiquidacionById retrieves Liquidacion by Id. Returns error if
+// GetTipoPensionById retrieves TipoPension by Id. Returns error if
 // Id doesn't exist
-func GetLiquidacionById(id int) (v *Liquidacion, err error) {
+func GetTipoPensionById(id int) (v *TipoPension, err error) {
 	o := orm.NewOrm()
-	v = &Liquidacion{Id: id}
+	v = &TipoPension{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllLiquidacion retrieves all Liquidacion matches certain condition. Returns empty list if
+// GetAllTipoPension retrieves all TipoPension matches certain condition. Returns empty list if
 // no records exist
-func GetAllLiquidacion(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllTipoPension(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Liquidacion))
+	qs := o.QueryTable(new(TipoPension))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -103,7 +96,7 @@ func GetAllLiquidacion(query map[string]string, fields []string, sortby []string
 		}
 	}
 
-	var l []Liquidacion
+	var l []TipoPension
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -126,11 +119,11 @@ func GetAllLiquidacion(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdateLiquidacion updates Liquidacion by Id and returns error if
+// UpdateTipoPension updates TipoPension by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateLiquidacionById(m *Liquidacion) (err error) {
+func UpdateTipoPensionById(m *TipoPension) (err error) {
 	o := orm.NewOrm()
-	v := Liquidacion{Id: m.Id}
+	v := TipoPension{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -141,15 +134,15 @@ func UpdateLiquidacionById(m *Liquidacion) (err error) {
 	return
 }
 
-// DeleteLiquidacion deletes Liquidacion by Id and returns error if
+// DeleteTipoPension deletes TipoPension by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteLiquidacion(id int) (err error) {
+func DeleteTipoPension(id int) (err error) {
 	o := orm.NewOrm()
-	v := Liquidacion{Id: id}
+	v := TipoPension{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Liquidacion{Id: id}); err == nil {
+		if num, err = o.Delete(&TipoPension{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

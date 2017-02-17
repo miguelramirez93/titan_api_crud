@@ -17,6 +17,7 @@ func (c *DocenteCargoController) URLMapping() {
 	c.Mapping("DocenteCargo", c.ConsultarAsignacionBasica)
 	c.Mapping("DocenteCedula", c.ConsultarCedulaDocente)
 }
+
 func (c *DocenteCargoController) ConsultarAsignacionBasica() {
 	var v models.Docente_x_Cargo
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {

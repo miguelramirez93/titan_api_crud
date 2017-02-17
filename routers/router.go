@@ -194,6 +194,48 @@ func init() {
 		    &controllers.FuncionarioProveedorController{},
 		  ),
 		),
+
+		beego.NSNamespace("/estado_civil",
+			beego.NSInclude(
+				&controllers.EstadoCivilController{},
+			),
+		),
+
+		beego.NSNamespace("/categoria_beneficiario",
+			beego.NSInclude(
+				&controllers.CategoriaBeneficiarioController{},
+			),
+		),
+
+		beego.NSNamespace("/tipo_pension",
+			beego.NSInclude(
+				&controllers.TipoPensionController{},
+			),
+		),
+
+		beego.NSNamespace("/tipo_pensionado",
+			beego.NSInclude(
+				&controllers.TipoPensionadoController{},
+			),
+		),
+
+		beego.NSNamespace("/resolucion",
+			beego.NSInclude(
+				&controllers.ResolucionController{},
+			),
+		),
+
+		beego.NSNamespace("/informacion_pensionado",
+			beego.NSInclude(
+				&controllers.InformacionPensionadoController{},
+			),
+		),
+
+		beego.NSNamespace("/sustituto",
+			beego.NSInclude(
+				&controllers.SustitutoController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

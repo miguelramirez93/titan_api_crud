@@ -11,16 +11,16 @@ import (
 )
 
 type ConceptoPorPersona struct {
-	ValorNovedad  float64     `orm:"column(valor_novedad)"`
-	EstadoNovedad string     `orm:"column(estado_novedad)"`
-	FechaDesde    time.Time `orm:"column(fecha_desde);type(date)"`
-	FechaHasta    time.Time `orm:"column(fecha_hasta);type(date)"`
-	NumCuotas     int64     `orm:"column(num_cuotas)"`
-	Persona       *InformacionProveedor       `orm:"column(persona);rel(fk)"`
-	Concepto      *Concepto `orm:"column(concepto);rel(fk)"`
-	Nomina        *Nomina       `orm:"column(nomina);rel(fk)"`
-	Id            int       `orm:"auto;column(id);pk"`
-	Tipo          string    `orm:"column(tipo);null"`
+	ValorNovedad  float64               `orm:"column(valor_novedad)"`
+	EstadoNovedad string                `orm:"column(estado_novedad)"`
+	FechaDesde    time.Time             `orm:"column(fecha_desde);type(date)"`
+	FechaHasta    time.Time             `orm:"column(fecha_hasta);type(date)"`
+	NumCuotas     int64                 `orm:"column(num_cuotas)"`
+	Persona       *InformacionProveedor `orm:"column(persona);rel(fk)"`
+	Concepto      *Concepto             `orm:"column(concepto);rel(fk)"`
+	Nomina        *Nomina               `orm:"column(nomina);rel(fk)"`
+	Id            int                   `orm:"auto;column(id);pk"`
+	Tipo          string                `orm:"column(tipo);null"`
 }
 
 func (t *ConceptoPorPersona) TableName() string {
@@ -158,21 +158,21 @@ func DeleteConceptoPorPersona(id int) (err error) {
 	return
 }
 
-func ConceptoPorPersonaActivo (id int , v *Preliquidacion ) ( datos []ConceptoPorPersona , err error){
+func ConceptoPorPersonaActivo(id int, v *Preliquidacion) (datos []ConceptoPorPersona, err error) {
 	o := orm.NewOrm()
 	consulta := `select a.*
 								from titan.concepto_por_persona as a
 											where a.estado_novedad = 'Activo'
 											and a.persona = ?
 											and a.nomina = ?
-											and ((? between a.fecha_desde and a.fecha_hasta ) or (? between a.fecha_desde and a.fecha_hasta)) `
-	_,err = o.Raw(consulta,id, v.Nomina.Id, v.FechaInicio, v.FechaFin).QueryRows(&datos)
+											`
+	_, err = o.Raw(consulta, id, v.Nomina.Id).QueryRows(&datos)
 	var concepto []Concepto
-	for i:=0; i < len(datos); i++ {
+	for i := 0; i < len(datos); i++ {
 		consulta := `select a.* from titan.concepto  as a
 									inner join titan.concepto_por_persona as b on a.id = b.concepto
 									where b.id = ?`
-		_,err = o.Raw(consulta,datos[i].Id).QueryRows(&concepto)
+		_, err = o.Raw(consulta, datos[i].Id).QueryRows(&concepto)
 		datos[i].Concepto = &concepto[0]
 	}
 
