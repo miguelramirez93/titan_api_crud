@@ -13,12 +13,20 @@ import (
 type Liquidacion struct {
 	Id                int       `orm:"column(id);pk"`
 	NombreLiquidacion string    `orm:"column(nombre_liquidacion)"`
-	IdUsuario         int64     `orm:"column(id_usuario)"`
 	Nomina            *Nomina   `orm:"column(nomina);rel(fk)"`
+	IdUsuario         int64     `orm:"column(id_usuario)"`
 	EstadoLiquidacion string    `orm:"column(estado_liquidacion)"`
 	FechaLiquidacion  time.Time `orm:"column(fecha_liquidacion);type(date)"`
 	FechaInicio       time.Time `orm:"column(fecha_inicio);type(date)"`
 	FechaFin          time.Time `orm:"column(fecha_fin);type(date)"`
+}
+
+type InformeLiquidacion struct {
+	IdPersona      int     `orm:"column(id)"`
+	NomProveedor   string  `orm:"column(nombre)"`
+	NumDocumento   float64 `orm:"column(documento)"`
+	NumeroContrato string  `orm:"column(contrato)"`
+	Conceptos      []ConceptosInforme
 }
 
 func (t *Liquidacion) TableName() string {
@@ -29,7 +37,7 @@ func init() {
 	orm.RegisterModel(new(Liquidacion))
 }
 
-// AddLiquidacion insert a new Liquidacion into database and returns
+// Addliquidacion insert a new liquidacion into database and returns
 // last inserted Id on success.
 func AddLiquidacion(m *Liquidacion) (id int64, err error) {
 	o := orm.NewOrm()
@@ -37,7 +45,7 @@ func AddLiquidacion(m *Liquidacion) (id int64, err error) {
 	return
 }
 
-// GetLiquidacionById retrieves Liquidacion by Id. Returns error if
+// GetliquidacionById retrieves liquidacion by Id. Returns error if
 // Id doesn't exist
 func GetLiquidacionById(id int) (v *Liquidacion, err error) {
 	o := orm.NewOrm()
@@ -48,7 +56,7 @@ func GetLiquidacionById(id int) (v *Liquidacion, err error) {
 	return nil, err
 }
 
-// GetAllLiquidacion retrieves all Liquidacion matches certain condition. Returns empty list if
+// GetAllliquidacion retrieves all liquidacion matches certain condition. Returns empty list if
 // no records exist
 func GetAllLiquidacion(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
@@ -104,7 +112,7 @@ func GetAllLiquidacion(query map[string]string, fields []string, sortby []string
 	}
 
 	var l []Liquidacion
-	qs = qs.OrderBy(sortFields...)
+	qs = qs.OrderBy(sortFields...).RelatedSel(5)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
 			for _, v := range l {
@@ -126,7 +134,7 @@ func GetAllLiquidacion(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdateLiquidacion updates Liquidacion by Id and returns error if
+// Updateliquidacion updates liquidacion by Id and returns error if
 // the record to be updated doesn't exist
 func UpdateLiquidacionById(m *Liquidacion) (err error) {
 	o := orm.NewOrm()
@@ -141,7 +149,7 @@ func UpdateLiquidacionById(m *Liquidacion) (err error) {
 	return
 }
 
-// DeleteLiquidacion deletes Liquidacion by Id and returns error if
+// Deleteliquidacion deletes liquidacion by Id and returns error if
 // the record to be deleted doesn't exist
 func DeleteLiquidacion(id int) (err error) {
 	o := orm.NewOrm()
@@ -152,6 +160,34 @@ func DeleteLiquidacion(id int) (err error) {
 		if num, err = o.Delete(&Liquidacion{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
+	}
+	return
+}
+
+func ResumenLiquidacion(v *Liquidacion) (resumen []InformeLiquidacion, err error) {
+	o := orm.NewOrm()
+	var numero_contratos []string
+	var informe InformeLiquidacion
+
+	_, err = o.Raw("select numero_contrato from titan.detalle_liquidacion where liquidacion = ? group by numero_contrato", v.Id).QueryRows(&numero_contratos)
+	if numero_contratos != nil && err == nil {
+		for _, contrato := range numero_contratos {
+			err = o.Raw("select a.id_proveedor as id ,a.nom_proveedor as nombre, a.num_documento as documento from agora.informacion_proveedor as a inner join argo.contrato_general as b on a.num_documento = b.contratista  where b.numero_contrato = ? and b.vigencia = ?", contrato, v.Nomina.Periodo).QueryRow(&informe)
+			if err == nil {
+				_, err = o.Raw("select  a.concepto as id , b.alias_concepto as nombre , b.naturaleza as naturaleza, a.valor_calculado as valor from titan.detalle_liquidacion as a inner join titan.concepto as b on a.concepto = b.id where a.numero_contrato = ? and a.liquidacion = ?;", contrato, v.Id).QueryRows(&informe.Conceptos)
+				fmt.Println(informe.Conceptos)
+				if err != nil {
+					fmt.Println("err3: ", err)
+				}
+			} else {
+				fmt.Println("err2: ", err)
+			}
+			informe.NumeroContrato = contrato
+			resumen = append(resumen, informe)
+		}
+
+	} else {
+		fmt.Println("err1: ", err)
 	}
 	return
 }
